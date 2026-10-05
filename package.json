@@ -1,0 +1,17 @@
+{
+  "name": "MyCash-ai-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "set NODE_ENV=test && node --test",
+    "test:watch": "set NODE_ENV=test && node --test --watch"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0"
+  }
+}
