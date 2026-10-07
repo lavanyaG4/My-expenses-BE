@@ -70,7 +70,7 @@ export function createExpensesRouter(collectionGetter = expensesCollection) {
         { $set: { amount: value.amount, category: value.category, description: value.description, expense_date: value.expenseDate, updated_at: new Date() } },
         { returnDocument: 'after' }
       );
-      return result?.value ? response.json(formatExpense(result.value)) : response.status(404).json({ message: 'Expense not found' });
+      return result ? response.json(formatExpense(result)) : response.status(404).json({ message: 'Expense not found' });
     } catch (error) { return next(error); }
   });
 
