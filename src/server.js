@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { pathToFileURL } from 'node:url';
 import { config } from './config.js';
 import { connectDatabase, expensesCollection, usersCollection } from './db.js';
@@ -13,6 +14,7 @@ export function createApp(options = {}) {
   const chatService = options.chatService ?? generateExpenseAnswer;
   const app = express();
 
+  app.use(cors({ origin: config.corsOrigins }));
   app.use(express.json());
   app.get('/', (_request, response) => response.json({ message: 'MyCash API Running' }));
 

@@ -6,6 +6,7 @@ const {
   MONGODB_URI,
   MONGODB_DATABASE = 'MyCash',
   PORT = 5000,
+  CORS_ORIGINS = 'http://localhost:3000,https://my-expenses-fe.vercel.app',
   GOOGLE_AI_API_KEY,
   GOOGLE_AI_MODEL = 'gemini-3.8-flash',
 } = process.env;
@@ -19,6 +20,7 @@ export const config = {
   mongodbUri,
   mongodbDatabase: MONGODB_DATABASE,
   port: Number(PORT),
+  corsOrigins: CORS_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean),
   googleAiApiKey: GOOGLE_AI_API_KEY,
   googleAiModel: GOOGLE_AI_MODEL,
 };

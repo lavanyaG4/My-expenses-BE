@@ -74,6 +74,40 @@ test('GET / returns the API health message', async () => {
   assert.deepEqual(JSON.parse(body), { message: 'MyCash API Running' });
 });
 
+test('CORS allows configured frontend origins', async () => {
+  const app = createApp({ collectionGetter: createMockCollection });
+  const { response } = await request(app, '/', {
+    headers: { Origin: 'http://localhost:3000' },
+  });
+
+  assert.equal(response.headers.get('access-control-allow-origin'), 'http://localhost:3000');
+});
+
+test('CORS handles preflight requests with the Authorization header', async () => {
+  const app = createApp({ collectionGetter: createMockCollection });
+  const { response } = await request(app, '/expenses', {
+    method: 'OPTIONS',
+    headers: {
+      Origin: 'https://my-expenses-fe.vercel.app',
+      'Access-Control-Request-Method': 'GET',
+      'Access-Control-Request-Headers': 'authorization',
+    },
+  });
+
+  assert.equal(response.status, 204);
+  assert.equal(response.headers.get('access-control-allow-origin'), 'https://my-expenses-fe.vercel.app');
+  assert.match(response.headers.get('access-control-allow-headers'), /authorization/i);
+});
+
+test('CORS does not allow unconfigured origins', async () => {
+  const app = createApp({ collectionGetter: createMockCollection });
+  const { response } = await request(app, '/', {
+    headers: { Origin: 'https://untrusted.example' },
+  });
+
+  assert.equal(response.headers.get('access-control-allow-origin'), null);
+});
+
 test('POST /expenses persists a new expense', async () => {
   const collection = createMockCollection();
   const app = createApp({ collectionGetter: () => collection });

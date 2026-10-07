@@ -17,6 +17,7 @@ npm --version
 2. Replace `MONGODB_URI` in `.env` with your MongoDB Atlas connection string.
 3. Set a strong `JWT_SECRET` value for token signing.
 4. Set `GOOGLE_AI_API_KEY` to enable the Gemini-powered AI chat. Optionally set `GOOGLE_AI_MODEL` (defaults to `gemini-3.8-flash`).
+5. Set `CORS_ORIGINS` to a comma-separated list of allowed frontend origins (including scheme and port). It defaults to `http://localhost:3000,https://my-expenses-fe.vercel.app`.
 
 ## 3. Install and run
 
