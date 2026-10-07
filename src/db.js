@@ -1,10 +1,9 @@
 import { MongoClient } from 'mongodb';
 import { config } from './config.js';
-import dns from 'node:dns';
 
 const client = new MongoClient(config.mongodbUri);
 let database;
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 // Connect once when the application starts, then reuse the connection.
 export async function connectDatabase() {
   await client.connect();
